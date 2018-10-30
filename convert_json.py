@@ -17,8 +17,12 @@ for dir, dirs, files in os.walk(os.getcwd()):
                 key = [*fcc_data][0]
                 o_ext = os.path.splitext(key)[1]
 
-                with open(os.path.join(dir, f'{fcc_name}{o_ext}'), 'w') as f:
-                    f.write(fcc_data[key])
+                file_path = os.path.join(dir, f'{fcc_name}{o_ext}')
+                if not os.path.isfile(file_path):
+                    print(f'Creating {file_path}')
+
+                    with open(file_path, 'w') as f:
+                        f.write(fcc_data[key])
 
             # Make files in directory named the same as JSON file
             elif len(fcc_data) > 1:
@@ -28,5 +32,9 @@ for dir, dirs, files in os.walk(os.getcwd()):
                     os.makedirs(o_dir)
 
                 for key in fcc_data:
-                    with open(os.path.join(dir, fcc_name, key), 'w') as f:
-                        f.write(fcc_data[key])
+                    file_path = os.path.join(dir, fcc_name, key)
+                    if not os.path.isfile(file_path):
+                        print(f'Creating {file_path}')
+
+                        with open(file_path, 'w') as f:
+                            f.write(fcc_data[key])
